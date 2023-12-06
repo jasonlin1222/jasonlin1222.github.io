@@ -166,19 +166,22 @@
 <p>順帶一提，比賽前原本有找到 HPC 用的 package manager Spack，不過好像裝起來環境變數跟原本的差很多，有些 Makefile 調整的東西太多所以後來也就換回 Ubuntu 的 APT。</p>
 <h3 id="Q1-HPC-Benchmark"><a href="#Q1-HPC-Benchmark" class="headerlink" title="Q1: HPC Benchmark"></a>Q1: HPC Benchmark</h3><p>Benchmark 總共有兩個，一個是 HPL，一個是 HPCG，都是經典的測試題，不過那時候的 HPL 安裝沒有設定好，最後跑不出分數。</p>
 <h3 id="Q2-Basilisk-amp-Fluid-Dynamics"><a href="#Q2-Basilisk-amp-Fluid-Dynamics" class="headerlink" title="Q2: Basilisk &amp; Fluid Dynamics"></a>Q2: Basilisk &amp; Fluid Dynamics</h3><p>這題是使用 Basilisk 這個套件完成四個流體力學的模擬，有些是直接跑提供的 code 調參數，有些是要自己寫模擬 code。</p>
-<h4 id="Lid"><a href="#Lid" class="headerlink" title="Lid"></a>Lid</h4><p>這題是跑 Lid-driven cavity flow，最後的結果是這樣的</p>
+<h4 id="Lid"><a href="#Lid" class="headerlink" title="Lid"></a>Lid</h4><p>這題是跑 <a target="_blank" rel="noopener" href="https://web.mit.edu/calculix_v2.7/CalculiX/ccx_2.7/doc/ccx/node14.html">Lid-driven cavity flow</a>（詳細點連結）。比賽的時候有一段時間主機被粉兩塊，render 的時候只有看到一半的模擬（蠻奇妙的）。</p>
+<p>最後的結果是這樣的</p>
 <img src="/2023/08/12/Journey-to-HiPAC/ux_lid.gif" class="" width="75" title="lid_result">
 <img src="/2023/08/12/Journey-to-HiPAC/uavg_lid.gif" class="" width="75" title="lid_result">
 
-<h4 id="Laminar-Flow-amp-Dam"><a href="#Laminar-Flow-amp-Dam" class="headerlink" title="Laminar Flow &amp; Dam"></a>Laminar Flow &amp; Dam</h4><p>這兩題都是要自己寫模擬程式，Laminar Flow 的模擬最後是壞掉的，然後 Dam 我們沒有寫出來</p>
-<p>附上失敗的圖片</p>
+<h4 id="Laminar-Flow-amp"><a href="#Laminar-Flow-amp" class="headerlink" title="Laminar Flow &amp;"></a>Laminar Flow &amp;</h4><p>這兩題都是要自己寫模擬程式，隊友有寫出 Laminar Flow 的模擬，不過最後結果是壞掉的。</p>
+<p>附上失敗的影片</p>
 <img src="/2023/08/12/Journey-to-HiPAC/ux.gif" class="" title="laminar_result">
 
-<h4 id="Bubble"><a href="#Bubble" class="headerlink" title="Bubble"></a>Bubble</h4><p>simulation 的結果，沒什麼優化到所以跑了一整個晚上</p>
+<h4 id="2D-Dam-Break"><a href="#2D-Dam-Break" class="headerlink" title="2D Dam Break"></a>2D Dam Break</h4><p>這題要模擬水壩崩壞的情況，詳細可以參考<a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/abs/pii/S0045793010002756">這裡</a>的模擬。<br>然後 Dam Break 我們沒有寫出來 QQ，</p>
+<h4 id="Bubble"><a href="#Bubble" class="headerlink" title="Bubble"></a>Bubble</h4><p>這題是模擬氣泡在液體中上升，<a target="_blank" rel="noopener" href="http://www.basilisk.fr/src/examples/bubble.c">src</a>在這裏。</p>
+<p>以下是 simulation 的結果，沒什麼優化到所以跑了一整個晚上</p>
 <img src="/2023/08/12/Journey-to-HiPAC/image.svg" class="" title="bubble_result">
 
-<h3 id="Q3-FourCastNet"><a href="#Q3-FourCastNet" class="headerlink" title="Q3: FourCastNet"></a>Q3: FourCastNet</h3><p><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/modulus/modulus-sym/user_guide/neural_operators/fourcastnet.html">FourCastNet</a> 是 Nvidia 出的大氣模擬，算是一種 Physics Informed 的 AI 模型。</p>
-<p>這題是 AI 題，於是在架設完系統後就丟給隊友了。似乎絕大多數的題目只要有跑他們給的 script 就會有分數（不過環境還是要有裝 CUDA）。原本有想試著用 GPU 平行不過賽中沒有成功實作出來，最後只能用一台主機的 GPU 跑模型。雖然最後有跑出結果不過就…有點悲慘。</p>
+<h3 id="Q3-FourCastNet"><a href="#Q3-FourCastNet" class="headerlink" title="Q3: FourCastNet"></a>Q3: FourCastNet</h3><p><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/modulus/modulus-sym/user_guide/neural_operators/fourcastnet.html">FourCastNet</a> 是 Nvidia 出的大氣模擬，算是一種 Physics Informed 的 AI 模型。這次的 task 是模擬 2022 的梅花颱風的路徑，給定颱風的移動資料，預測未來一個月的颱風路徑。</p>
+<p>這題是 AI 題，於是在架設完系統後就丟給隊友了。整個題目引導參賽者從環境架設到測試，再到最後的資料模擬，絕大多數的題目只要環境設定好（CUDA 等等），跑他們給的 script 就會有分數。原本有想試著用 GPU 平行不過賽中沒有成功實作出來，最後只能用一台主機的 GPU 跑模型。雖然最後有跑出結果不過就…有點悲慘。</p>
 <p>這是主辦單位給的<em>正解</em></p>
 <img src="/2023/08/12/Journey-to-HiPAC/FFBT_FCN_E-1.png" class="" title="fourcastnet_result">
 
@@ -189,12 +192,10 @@
 <img src="/2023/08/12/Journey-to-HiPAC/FFBT_FCN_D-2.png" class="" title="fourcastnet_result_us">
 <img src="/2023/08/12/Journey-to-HiPAC/FFBT_FCN_D-1.png" class="" title="fourcastnet_result_us">
 
-<p>雖然迭代的狀況到 5,000 epoch 就差不多收斂了，不過實際模擬到結果並沒有很完整，但好像所有隊伍的狀況都差不多。</p>
+<p>雖然迭代的狀況到 5,000 epoch 就差不多收斂了，不過實際模擬到結果並沒有很完整，但好像所有隊伍的狀況都差不多。比賽只有遇到轉檔跟一些環境問題，這題算順利解決。賽後有說這題主要是為了啟發平行 AI 跟 Physic-Informed 的模型應用。</p>
 <h3 id="Question-4-HPL-AI"><a href="#Question-4-HPL-AI" class="headerlink" title="Question 4: HPL-AI"></a>Question 4: HPL-AI</h3><p>這題是隱藏題，不過最後幾個小時 CUDA driver 壞掉了於是也放棄了。</p>
 <h3 id="賽後報告"><a href="#賽後報告" class="headerlink" title="賽後報告"></a>賽後報告</h3><p>賽後有一小段的簡報，就稍微介紹自己經歷跟比賽中做的事情和心得。評審們也問了很多個人經驗相關的問題（算是比賽最簡單的環節 QQ）。</p>
-<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>賽前跟 HPC 接觸的經驗只限於跑 VASP 做材料模擬，剩下的安裝跟其他技能基本為 0。所以在比賽前幾個禮拜測試了很多架設方案跟軟體。不過到現場的時候還是沒有全部架設成功（原本還有計畫用 Ansible 之類的工具架設不過後來都沒時間準備），之後有機會再補上吧。</p>
-<p>比賽基本只需要乖乖跟電腦，聽說隔壁隊伍有個毒乖乖，放在誰電腦上誰就連不上主機 XD。</p>
-<p>最後有一個解題大會，大概解釋了每一題怎麼解，不過 Basilisk 的題目我聽不太懂（我流體太爛我錯了）。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>賽前跟 HPC 接觸的經驗只限於跑 VASP 做材料模擬，剩下的安裝跟其他技能基本為 0。所以在比賽前幾個禮拜測試了很多架設方案跟軟體，主要選 MPI 跟數學 library。最後我們使用 OpenMPI 跟 Intel-MLK，不過到現場的時候還是沒有全部架設成功（原本還有計畫用 Ansible 之類的工具架設不過後來都沒時間準備），之後有機會再來測試吧。比賽會場有提供早餐跟午餐，然後<strong>很多</strong>的點心（國網真的很棒）。三天基本上只需要乖乖跟電腦，我們第一天在高鐵站買了一大包乖乖放在攤位上。聽說隔壁隊伍有個毒乖乖，放在誰電腦上誰就連不上主機 XD。最後有一個解題大會，大概解釋了每一題怎麼解，不過 Basilisk 的題目我聽不太懂（我流體太爛我錯了）。</p>
 <p>比賽挺好玩的，學了很多新技能，也交了一些朋友。最後比賽結束有個晚宴，但因為隔天有事情所以就跳過了（聽說很好吃 QQ）。</p>
 
 </div> 
