@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="jasonlin1222">
+
+
+    <meta name="subtitle" content="A blog page for everything">
+
+
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LXD34MD95T"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-LXD34MD95T');
+    </script>
+
+
+
+
+<title>HPC From Zero to 0.5 | JL&#39;s Notes</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto+Mono&display=swap');
+</style>
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/frame.js"></script>
+    
+
+
+
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+
+
+  <!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+  <body>
+    <div class="mask-border">
+    </div>
+
+    <div class="wrapper">
+
+      <div class="header">
+  <div class="flex-container">
+    <div class="header-inner">
+      <div class="site-brand-container">
+        <a href="/">
+          
+            JL&#39;s Notes
+          
+        </a>
+      </div>
+      <div id="menu-btn" class="menu-btn" onclick="toggleMenu()">
+        Menu
+      </div>
+      <nav class="site-nav">
+        <ul class="menu-list">
+          
+            
+              <li class="menu-item">
+                <a href="/">Home</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/archives/">Archive</a>
+              </li> 
+                   
+          
+            
+              <li class="menu-item">
+                <a href="/categories/gallery/">Gallery</a>
+              </li> 
+                   
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main">
+        <div class="flex-container">
+          <article id="post">
+
+  
+    <div class="post-head">
+    <div class="post-info">
+        <div class="tag-list">
+            
+                
+                    <span class="post-tag">
+                        <a href="/tags/HPC/">
+                            HPC
+                        </a>
+                    </span>    
+                           
+            
+        </div>
+        <div class="post-title">
+            
+            
+                HPC From Zero to 0.5
+            
+            
+        </div>
+        <span class="post-date">
+            Aug 12, 2023
+        </span>
+    </div>
+    <div class="post-img">
+        
+            <div class="h-line-primary"></div>
+              
+    </div>
+</div>
+    <div class="post-content">
+    <blockquote>
+<p>來記錄一下在 HPC 比賽被電的過程 QQ</p>
+</blockquote>
+<h2 id="High-Performance-Application-Competition-HiPAC"><a href="#High-Performance-Application-Competition-HiPAC" class="headerlink" title="High Performance Application Competition (HiPAC)"></a>High Performance Application Competition (HiPAC)</h2><p>國網中心主辦為期 3 天的高效能運算。基本上就是比較親民一點的 SCC，比賽只需要軟體不需要擔心硬體問題。</p>
+<h2 id="Competition-Overview"><a href="#Competition-Overview" class="headerlink" title="Competition Overview"></a>Competition Overview</h2><p>總共給我們 4 題，第一題是經典的 HPC benchmark 題目，第二題是用 Basilisk 跑流體力學的題目，第三題是跑 Nvidia 的 FourCastNet AI 預測颱風的題目，第四題是隱藏題，在比賽最後兩個小時才公布，是跑 HPL-AI 的 benchmark。</p>
+<h3 id="主機性能"><a href="#主機性能" class="headerlink" title="主機性能"></a>主機性能</h3><p>每一隊有四台 compute node（2x Intel Xeon 20 core，4x NVIDIA Tesla P100 16G，國網中心的強大 XD）。主機在台中的機房，所以大會開始前有稍微提醒一下不要把主機 shutdown，不過還是有隊伍的主機自己斷線。軟體的部分是使用 Ubuntu 22.04 LTS 版本，剩下從網路到平行的程式都是自己裝。</p>
+<p>我們那時候花了一個早上在調整連線，NFSserver，然後安裝 MPI，原本下午打算要裝 Slurm 那種排程系統，不過最後沒裝成功，直接用 tmux 跑手動排程 XD。</p>
+<p>順帶一提，比賽前原本有找到 HPC 用的 package manager Spack，不過好像裝起來環境變數跟原本的差很多，有些 Makefile 調整的東西太多所以後來也就換回 Ubuntu 的 APT。</p>
+<h3 id="Q1-HPC-Benchmark"><a href="#Q1-HPC-Benchmark" class="headerlink" title="Q1: HPC Benchmark"></a>Q1: HPC Benchmark</h3><p>Benchmark 總共有兩個，一個是 HPL，一個是 HPCG，都是經典的測試題，不過那時候的 HPL 安裝沒有設定好，最後跑不出分數。</p>
+<h3 id="Q2-Basilisk-amp-Fluid-Dynamics"><a href="#Q2-Basilisk-amp-Fluid-Dynamics" class="headerlink" title="Q2: Basilisk &amp; Fluid Dynamics"></a>Q2: Basilisk &amp; Fluid Dynamics</h3><p>這題是使用 Basilisk 這個語言來完成四個 simulation，有些是直接跑提供的 code 調參，有些是要自己寫模擬 code。</p>
+<h4 id="Lid"><a href="#Lid" class="headerlink" title="Lid"></a>Lid</h4><p>這題是跑 Lid-driven cavity flow，最後的結果是這樣的</p>
+<img src="/2023/08/12/Journey-to-HiPAC/ux_lid.gif" class="" title="lid_result">
+<img src="/2023/08/12/Journey-to-HiPAC/uavg_lid.gif" class="" title="lid_result">
+
+<h4 id="Laminar-Flow-amp-Dam"><a href="#Laminar-Flow-amp-Dam" class="headerlink" title="Laminar Flow &amp; Dam"></a>Laminar Flow &amp; Dam</h4><p>這兩題都是要自己寫模擬程式，Laminar Flow 的模擬最後是壞掉的，然後 Dam 我們沒有寫出來</p>
+<p>附上失敗的圖片</p>
+<img src="/2023/08/12/Journey-to-HiPAC/ux.gif" class="" title="laminar_result">
+
+<h4 id="Bubble"><a href="#Bubble" class="headerlink" title="Bubble"></a>Bubble</h4><p>simulation 的結果，沒什麼優化到所以跑了一整個晚上</p>
+<img src="/2023/08/12/Journey-to-HiPAC/image.svg" class="" title="bubble_result">
+
+<h3 id="Q3-FourCastNet"><a href="#Q3-FourCastNet" class="headerlink" title="Q3: FourCastNet"></a>Q3: FourCastNet</h3><p><a target="_blank" rel="noopener" href="https://docs.nvidia.com/deeplearning/modulus/modulus-sym/user_guide/neural_operators/fourcastnet.html">FourCastNet</a> 是 Nvidia 出的大氣模擬，算是一種 Physics Informed 的 AI 模型。</p>
+<p>這題是 AI 題，於是在架設完系統後就丟給隊友了。似乎絕大多數的題目只要有跑他們給的 script 就會有分數（不過環境還是要有裝 CUDA）。原本有想試著用 GPU 平行不過賽中沒有成功實作出來，最後只能用一台主機的 GPU 跑模型。雖然最後有跑出結果不過就…有點悲慘。</p>
+<p>這是主辦單位給的<em>正解</em></p>
+<img src="/2023/08/12/Journey-to-HiPAC/FFBT_FCN_E-1.png" class="" title="fourcastnet_result">
+
+<p>這是我們跑出來的結果</p>
+<img src="/2023/08/12/Journey-to-HiPAC/FFBT_FCN_E-2.png" class="" title="fourcastnet_result_us">
+
+<p>時間結果跟迭代的狀況。</p>
+<img src="/2023/08/12/Journey-to-HiPAC/FFBT_FCN_D-2.png" class="" title="fourcastnet_result_us">
+<img src="/2023/08/12/Journey-to-HiPAC/FFBT_FCN_D-1.png" class="" title="fourcastnet_result_us">
+
+<p>雖然迭代的狀況到 5,000 epoch 就差不多收斂了，不過實際模擬到結果並沒有很完整，但好像所有隊伍的狀況都差不多。</p>
+<h3 id="Question-4-HPL-AI"><a href="#Question-4-HPL-AI" class="headerlink" title="Question 4: HPL-AI"></a>Question 4: HPL-AI</h3><p>這題是隱藏題，不過最後幾個小時 CUDA driver 壞掉了於是也放棄了。</p>
+<h3 id="賽後報告"><a href="#賽後報告" class="headerlink" title="賽後報告"></a>賽後報告</h3><p>賽後有一小段的簡報，就稍微介紹自己經歷跟比賽中做的事情和心得。評審們也問了很多個人經驗相關的問題（算是比賽最簡單的環節 QQ）。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>賽前跟 HPC 接觸的經驗只限於跑 VASP 做材料模擬，剩下的安裝跟其他技能基本為 0。所以在比賽前幾個禮拜測試了很多架設方案跟軟體。不過到現場的時候還是沒有全部架設成功（原本還有計畫用 Ansible 之類的工具架設不過後來都沒時間準備），之後有機會再補上吧。</p>
+<p>比賽基本只需要乖乖跟電腦，聽說隔壁隊伍有個毒乖乖，放在誰電腦誰連不上主機，難得乖乖壞了。</p>
+<p>最後有一個解題大會，唯獨 Basilisk 的題目我聽不太懂（我流體太爛我錯了）。</p>
+<p>比賽挺好玩的，學了很多新技能，也交了一些朋友。最後比賽結束有個晚宴，但因為隔天有事情所以就跳過了（聽說很好吃 QQ）。</p>
+
+</div> 
+
+<script>
+    window.onload = detectors();
+</script>
+    <div class="post-footer">
+    <div class="h-line-primary"></div>
+    <nav class="post-nav">
+        <div class="prev-item">
+           
+        </div>
+        <div class="next-item">
+            
+                <div class="icon arrow-right"></div>
+                <div class="post-link">
+                  <a href="/2023/06/09/HSCTF10/">Next</a>  
+                </div>  
+            
+        </div>
+    </nav>
+</div>
+
+    
+      <div class="post-comment">
+
+     
+
+     
+    
+    
+
+</div>
+     
+  
+</article>
+        </div>
+      </div>
+      
+      <div class="footer">
+    <div class="flex-container">
+        <div class="footer-text">
+            
+            
+                Jason Lin | 
+            
+            
+                Powered by <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a> & <a target="_blank" rel="noopener" href="https://github.com/zoeingwingkei/frame/">Frame</a>
+                
+        </div>
+    </div>
+</div>
+
+    </div>
+
+    
+    
+
+  </body>
+</html>
