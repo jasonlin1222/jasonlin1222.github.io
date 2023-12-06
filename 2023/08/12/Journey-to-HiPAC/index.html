@@ -165,10 +165,10 @@
 <p>我們那時候花了一個早上在調整連線，NFSserver，然後安裝 MPI，原本下午打算要裝 Slurm 那種排程系統，不過最後沒裝成功，直接用 tmux 跑手動排程 XD。</p>
 <p>順帶一提，比賽前原本有找到 HPC 用的 package manager Spack，不過好像裝起來環境變數跟原本的差很多，有些 Makefile 調整的東西太多所以後來也就換回 Ubuntu 的 APT。</p>
 <h3 id="Q1-HPC-Benchmark"><a href="#Q1-HPC-Benchmark" class="headerlink" title="Q1: HPC Benchmark"></a>Q1: HPC Benchmark</h3><p>Benchmark 總共有兩個，一個是 HPL，一個是 HPCG，都是經典的測試題，不過那時候的 HPL 安裝沒有設定好，最後跑不出分數。</p>
-<h3 id="Q2-Basilisk-amp-Fluid-Dynamics"><a href="#Q2-Basilisk-amp-Fluid-Dynamics" class="headerlink" title="Q2: Basilisk &amp; Fluid Dynamics"></a>Q2: Basilisk &amp; Fluid Dynamics</h3><p>這題是使用 Basilisk 這個語言來完成四個 simulation，有些是直接跑提供的 code 調參，有些是要自己寫模擬 code。</p>
+<h3 id="Q2-Basilisk-amp-Fluid-Dynamics"><a href="#Q2-Basilisk-amp-Fluid-Dynamics" class="headerlink" title="Q2: Basilisk &amp; Fluid Dynamics"></a>Q2: Basilisk &amp; Fluid Dynamics</h3><p>這題是使用 Basilisk 這個套件完成四個流體力學的模擬，有些是直接跑提供的 code 調參數，有些是要自己寫模擬 code。</p>
 <h4 id="Lid"><a href="#Lid" class="headerlink" title="Lid"></a>Lid</h4><p>這題是跑 Lid-driven cavity flow，最後的結果是這樣的</p>
-<img src="/2023/08/12/Journey-to-HiPAC/ux_lid.gif" class="" title="lid_result">
-<img src="/2023/08/12/Journey-to-HiPAC/uavg_lid.gif" class="" title="lid_result">
+<img src="/2023/08/12/Journey-to-HiPAC/ux_lid.gif" class="" title="[width&#x3D;150] lid_result">
+<img src="/2023/08/12/Journey-to-HiPAC/uavg_lid.gif" class="" title="[width&#x3D;150] lid_result">
 
 <h4 id="Laminar-Flow-amp-Dam"><a href="#Laminar-Flow-amp-Dam" class="headerlink" title="Laminar Flow &amp; Dam"></a>Laminar Flow &amp; Dam</h4><p>這兩題都是要自己寫模擬程式，Laminar Flow 的模擬最後是壞掉的，然後 Dam 我們沒有寫出來</p>
 <p>附上失敗的圖片</p>
